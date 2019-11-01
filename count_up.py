@@ -32,7 +32,7 @@ if not os.path.exists(gff):
 if not os.path.exists(fasta):
     os.system("curl -O ftp://ftp.ensemblgenomes.org/pub/bacteria/release-45/fasta/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655/dna/Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.dna.chromosome.Chromosome.fa.gz")
     
-with gzip.open(gff,"r") as ecoligff: #unzipping and opening
+with gzip.open(gff,"rt") as ecoligff: #unzipping and opening
     gene_count = 0
     total_gene_length=0
     str1=" "
@@ -51,7 +51,7 @@ with gzip.open(gff,"r") as ecoligff: #unzipping and opening
                 total_gene_length += genelen
                
 
-    print"There are",gene_count,"genes"
+    print("There are",gene_count,"genes")
 
 with gzip.open(fasta,"rt") as ecolifa: 
     seqs = aspairs(ecolifa)
@@ -62,5 +62,7 @@ with gzip.open(fasta,"rt") as ecolifa:
         genome_len=len(seqstring)
 total_gene_length_float = float(total_gene_length) #make integers floats for division
 genome_len_float = float(genome_len)
-#print("The total number of genes is:",gene_count) 
-print((total_gene_length_float/genome_len_float))*100,"percent of the E. coli genome is coding."
+
+percent_coding=((total_gene_length_float/genome_len_float)*100)
+
+print(percent_coding,"percent of the E. coli genome is coding.")
